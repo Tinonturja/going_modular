@@ -21,7 +21,7 @@ class TinyVGGModelV0(nn.Module):
                       stride=1,
                       padding=1),
             nn.ReLU(),
-            nn.MaxPool1d(2)
+            nn.MaxPool2d(2)
         )
 
         self.conv2 = nn.Sequential(
@@ -37,14 +37,15 @@ class TinyVGGModelV0(nn.Module):
                       stride=1,
                       padding=1),
             nn.ReLU(),
-            nn.MaxPool1d(2)
+            nn.MaxPool2d(2)
         )
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(in_features=hidden_units,
+            nn.Linear(in_features=hidden_units*16*16,
                       out_features=output_shape)
         )
 
 
     def forward(self,x):
+        return self.classifier(self.conv2(self.conv1(x)))
