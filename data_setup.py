@@ -43,19 +43,16 @@ def create_dataloaders(
     class_names = train_data.classes
 
     # Turning Image into DataLoaders
-    BATCH_SIZE = 32
+    batch_size = 32
     train_dataloader = DataLoader(dataset=train_data,
-                                  batch_size=BATCH_SIZE,
+                                  batch_size=batch_size,
                                   shuffle=True,
                                   pin_memory=True)
 
     test_dataloader = DataLoader(dataset = test_data,
-                                 batch_size=BATCH_SIZE,
+                                 batch_size=batch_size,
                                  shuffle= False,
                                  pin_memory=True)
-
-    # Device agnostic code
-    device = 'mps' if torch.backends.mps.is_available() else 'cpu'
-    print(device)
+    
 
     return train_dataloader,test_dataloader
