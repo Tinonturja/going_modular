@@ -3,16 +3,15 @@ the image into tensors and in proper formats so that deep learning can be done
 """
 # create dataset
 import os
-import torchvision
 from torchvision import datasets,transforms
 from torch.utils.data import DataLoader
 
 NUM_WORKERS = os.cpu_count()
-
 def create_dataloaders(
         train_dir: str,
         test_dir: str,
-        transform: transforms.Compose,
+        train_transform: transforms.Compose,
+        test_transform: transforms.Compose,
         batch_size: int,
         num_workers: int=NUM_WORKERS
 ):
@@ -34,8 +33,8 @@ def create_dataloaders(
         where class_names is a list of the target classes.
     """
 
-    train_data = datasets.ImageFolder(train_dir,transform=transform)
-    test_data = datasets.ImageFolder(test_dir,transform=transform)
+    train_data = datasets.ImageFolder(train_dir,transform=train_transform)
+    test_data = datasets.ImageFolder(test_dir,transform=test_transform)
 
     # Get Class names
     class_names = train_data.classes
