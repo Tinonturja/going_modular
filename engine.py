@@ -6,7 +6,6 @@ def train_loop(dataset: torch.utils.data.DataLoader,
                model: torch.nn.Module,
                loss_fn: torch.nn.Module,
                optimizer: torch.optim.Optimizer,
-               accuracy_fn,
                device):
 
 
@@ -26,7 +25,7 @@ def train_loop(dataset: torch.utils.data.DataLoader,
     model.train()
 
     #initialize train loss and train accuracynm
-    train_loss,train_acc = 0,0
+    train_loss,train_acc = 0, 0
     for batch,(X,y) in enumerate(dataset):
 
         # Pass the model to the target device
@@ -39,7 +38,7 @@ def train_loop(dataset: torch.utils.data.DataLoader,
         # Calculate loss
         loss = loss_fn(y_logit,y)
         train_loss += loss.item()
-        acc = (y_pred_prob==y).sum().item()
+        acc = (y_pred_prob==y).sum().item()/len(y_logit)
         train_acc +=acc
         # Set the gradient zero
         optimizer.zero_grad()
@@ -96,7 +95,7 @@ def test_loop(model:torch.nn.Module,
             # Calculate loss
             loss = loss_fn(y_logit, y)
             test_loss += loss.item()
-            acc = (y_pred_prob == y).sum().item()
+            acc = (y_pred_prob == y).sum().item()/len(y_logit)
             test_acc += acc
 
 
